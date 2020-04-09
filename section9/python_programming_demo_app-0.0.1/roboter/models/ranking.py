@@ -15,6 +15,7 @@ RANKING_CSV_FILE_PATH = 'ranking.csv'
 
 class CsvModel(object):
     """Base csv model."""
+
     def __init__(self, csv_file):
         self.csv_file = csv_file
         if not os.path.exists(csv_file):
@@ -23,12 +24,16 @@ class CsvModel(object):
 
 class RankingModel(CsvModel):
     """Definition of class that generates ranking model to write to CSV"""
+
     def __init__(self, csv_file=None, *args, **kwargs):
         if not csv_file:
             csv_file = self.get_csv_file_path()
+        # 親クラスのinit関数を発火させ空のcsvファイルを作成
         super().__init__(csv_file, *args, **kwargs)
         self.column = [RANKING_COLUMN_NAME, RANKING_COLUMN_COUNT]
+        # 辞書型の初期化
         self.data = collections.defaultdict(int)
+        # csvデータからデータをself.dataへ格納
         self.load_data()
 
     def get_csv_file_path(self):
@@ -62,6 +67,7 @@ class RankingModel(CsvModel):
         return self.data
 
     def save(self):
+        # 呼び出されたら、self.dataをcsvファイルに書き込む
         """Save data to csv file."""
         # TODO (jsakai) Use locking mechanism for avoiding dead lock issue
         with open(self.csv_file, 'w+') as csv_file:
@@ -88,7 +94,8 @@ class RankingModel(CsvModel):
 
         if not self.data:
             return None
-
+        # dict型.getでdictのValueを取得できる。
+        # つまりValueで比較して、降順に並べ替える
         sorted_data = sorted(self.data, key=self.data.get, reverse=True)
         for name in sorted_data:
             if name in not_list:

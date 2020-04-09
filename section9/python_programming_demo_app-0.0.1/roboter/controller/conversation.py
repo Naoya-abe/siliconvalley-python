@@ -9,4 +9,3 @@ def talk_about_restaurant():
     restaurant_robot.recommend_restaurant()
     restaurant_robot.ask_user_favorite()
     restaurant_robot.thank_you()
-

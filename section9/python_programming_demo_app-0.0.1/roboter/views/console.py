@@ -14,12 +14,14 @@ def get_template_dir_path():
     template_dir_path = None
     try:
         import settings
+        # settingsディレクトリが存在したら、そこのtemplateファイルを取得する
         if settings.TEMPLATE_PATH:
             template_dir_path = settings.TEMPLATE_PATH
     except ImportError:
         pass
 
     if not template_dir_path:
+        # ユーザーから指定がなければ、パッケージの中のtemplateを使う
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         template_dir_path = os.path.join(base_dir, 'templates')
 
@@ -39,10 +41,12 @@ def find_template(temp_file):
     Raises:
         NoTemplateError: If the file does not exists.
     """
+    # templateが入っているディレクトリがわからないので、ディレクトリのパスを取得していく
     template_dir_path = get_template_dir_path()
     temp_file_path = os.path.join(template_dir_path, temp_file)
     if not os.path.exists(temp_file_path):
         raise NoTemplateError('Could not find {}'.format(temp_file))
+    # templateファイルのpathを返す。名前を見ただけでわかる
     return temp_file_path
 
 
@@ -57,11 +61,16 @@ def get_template(template_file_path, color=None):
     Returns:
         string.Template: Return templates with characters in templates.
     """
+    # 引数で指定されたテンプレートファイルを探しに行く
     template = find_template(template_file_path)
     with open(template, 'r', encoding='utf-8') as template_file:
         contents = template_file.read()
+        # 改行コードを削除
         contents = contents.rstrip(os.linesep)
+        # テキストの整形
         contents = '{splitter}{sep}{contents}{sep}{splitter}{sep}'.format(
             contents=contents, splitter="=" * 60, sep=os.linesep)
+        # テキストに色を付ける
         contents = termcolor.colored(contents, color)
+        # str型にしてテキストを返す
         return string.Template(contents)

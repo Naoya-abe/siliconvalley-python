@@ -18,11 +18,14 @@ class Robot(object):
     def hello(self):
         """Returns words to the user that the robot speaks at the beginning."""
         while True:
+            # ここでユーザに返す挨拶のtemplateファイルを取得している
             template = console.get_template('hello.txt', self.speak_color)
+            # テンプレート置換を行い、新たな文字列を生成して返します。
             user_name = input(template.substitute({
                 'robot_name': self.name}))
 
             if user_name:
+                # 全ての単語の頭文字を大文字に変更
                 self.user_name = user_name.title()
                 break
 
@@ -36,12 +39,15 @@ class RestaurantRobot(Robot):
 
     def _hello_decorator(func):
         """Decorator to say a greeting if you are not greeting the user."""
+
+        # user_nameを取得していないなら取得する
         def wrapper(self):
             if not self.user_name:
                 self.hello()
             return func(self)
         return wrapper
 
+    # recommend_restaurantを実行する前に_hello_decoratorを実行させる
     @_hello_decorator
     def recommend_restaurant(self):
         """Show restaurant recommended restaurant to the user."""
@@ -49,6 +55,7 @@ class RestaurantRobot(Robot):
         if not new_recommend_restaurant:
             return None
 
+        # 前回に表示したおすすめレストランをここに代入
         will_recommend_restaurants = [new_recommend_restaurant]
         while True:
             template = console.get_template('greeting.txt', self.speak_color)
@@ -63,7 +70,7 @@ class RestaurantRobot(Robot):
 
             if is_yes.lower() == 'n' or is_yes.lower() == 'no':
                 new_recommend_restaurant = self.ranking_model.get_most_popular(
-                    not_list=will_recommend_restaurants)
+                    not_list=will_recommend_restaurants)  # not_listに前回おすすめしたレストランを入れておくことで、2回おすすめしないようにしている
                 if not new_recommend_restaurant:
                     break
                 will_recommend_restaurants.append(new_recommend_restaurant)

@@ -1,0 +1,31 @@
+# サンプルコードの設計とフォルダ構造の解説
+
+## MVCモデル
+
+### Model
+
+- それぞれの機能について書く
+- ロボット
+    - おすすめのレストランについてユーザーからアンケートを取る
+    - ユーザの好きなレストランを聞く
+    - robotとcsvは紐付いているので、csvモデルをロボットのモデルに結びつける
+- CSV
+    - csvの読み取り
+    - csvの保存
+    - 人気のレストランの取得
+
+### Views
+
+- 画面を構築する
+- Templatesフォルダからファイルをimportする
+
+### Controller
+
+- どういった流れでプログラムが動くのかを記述する
+- ViewとModelをControllしている
+- 今回の例では
+    - restaurant_robot = robot.RestaurantRobot()：ロボットを呼び出す
+    - restaurant_robot.hello()：ロボットに始まり挨拶をさせる
+    - restaurant_robot.recommend_restaurant()：ロボットがおすすめのレストランをユーザーに伝える
+    - restaurant_robot.ask_user_favorite()：ロボットがユーザーの好きなレストランを聞く
+    - restaurant_robot.thank_you()：ロボットに終わりの挨拶をさせる
