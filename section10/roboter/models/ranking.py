@@ -2,6 +2,7 @@
 
 TODO (jsakai) Rewrite to DB instead of CSV
 """
+# import collections,csv,osなどのように続けて書かない
 import collections
 import csv
 import os
@@ -15,6 +16,7 @@ RANKING_CSV_FILE_PATH = 'ranking.csv'
 
 class CsvModel(object):
     """Base csv model."""
+
     def __init__(self, csv_file):
         self.csv_file = csv_file
         if not os.path.exists(csv_file):
@@ -23,6 +25,7 @@ class CsvModel(object):
 
 class RankingModel(CsvModel):
     """Definition of class that generates ranking model to write to CSV"""
+
     def __init__(self, csv_file=None, *args, **kwargs):
         if not csv_file:
             csv_file = self.get_csv_file_path()
@@ -54,6 +57,7 @@ class RankingModel(CsvModel):
         Returns:
             dict: Returns ranking data of dict type.
         """
+        # ファイルは必ずwithで開く
         with open(self.csv_file, 'r+') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
@@ -63,6 +67,8 @@ class RankingModel(CsvModel):
 
     def save(self):
         """Save data to csv file."""
+        # TODO (nabe) jwefidejwfoer 企業内
+        # TODO (nabe@gmail.com) jwefidejwfoer オープンソース
         # TODO (jsakai) Use locking mechanism for avoiding dead lock issue
         with open(self.csv_file, 'w+') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=self.column)
@@ -74,7 +80,7 @@ class RankingModel(CsvModel):
                     RANKING_COLUMN_COUNT: count
                 })
 
-    def get_most_popular(self, not_list=None):
+    def get_most_popular(self, not_list=None):  # リストは参照渡しになるので、not_list=[]として引数に宣言しない
         """Fetch the data of the top most ranking.
 
         Args:

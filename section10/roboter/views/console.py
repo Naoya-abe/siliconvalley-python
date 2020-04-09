@@ -5,7 +5,13 @@ import string
 import termcolor
 
 
+# クラスや関数などの定義は2行開ける
+# クラス内のメソッドは1行
+# importの下は2行空ける
+
+
 def get_template_dir_path():
+    # コメントは "" で囲む
     """Return the path of the template's directory.
 
     Returns:

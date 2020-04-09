@@ -2,7 +2,7 @@
 from roboter.models import ranking
 from roboter.views import console
 
-
+# グローバル変数は全て大文字スネークケース
 DEFAULT_ROBOT_NAME = 'Roboko'
 
 
@@ -28,6 +28,7 @@ class Robot(object):
 
 
 class RestaurantRobot(Robot):
+    # クラスの宣言はキャメルケース
     """Handle data model on restaurant."""
 
     def __init__(self, name=DEFAULT_ROBOT_NAME):
@@ -36,14 +37,18 @@ class RestaurantRobot(Robot):
 
     def _hello_decorator(func):
         """Decorator to say a greeting if you are not greeting the user."""
+
         def wrapper(self):
             if not self.user_name:
                 self.hello()
             return func(self)
         return wrapper
 
+    # デコレーターは基本@を使う
+    # 古い書き方：recommend_restaurant = _hello_decorator(recommend_restaurant)
     @_hello_decorator
     def recommend_restaurant(self):
+        # 関数、変数はスネークケース
         """Show restaurant recommended restaurant to the user."""
         new_recommend_restaurant = self.ranking_model.get_most_popular()
         if not new_recommend_restaurant:
