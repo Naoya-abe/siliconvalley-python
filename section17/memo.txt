@@ -1,0 +1,8 @@
+# インフラ環境自動化
+
+# キーワード（後々調査）
+    - ubuntu
+    - 仮想環境
+    - vagrant
+    - virtualbox
+    - 

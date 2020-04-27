@@ -1,0 +1,1 @@
+{"virtualbox":{"/srv/ops":{"guestpath":"/srv/ops","hostpath":"/Users/naoyaabe/playground/python/siliconvalley-python/section17/ops","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/naoyaabe/playground/python/siliconvalley-python/section17","disabled":false,"__vagrantfile":true}}}
